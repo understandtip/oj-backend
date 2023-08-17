@@ -131,5 +131,5 @@ public class QuestionVO implements Serializable {
         return questionVO; //tags  judgeConfig  userVO
     }
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;//设置序列号
 }
