@@ -25,7 +25,7 @@ spring:
     username: root
     password: 123456
   # Redis 配置
-  # todo 需替换配置，然后取消注释
+  # todo 需替换配置，然后取消注释  将数据放在缓存中，增删改 时需要修改缓存
 #  redis:
 #    database: 1
 #    host: localhost
