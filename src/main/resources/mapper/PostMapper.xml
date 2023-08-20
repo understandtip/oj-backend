@@ -4,9 +4,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yupi.oj.mapper.PostMapper">
+<mapper namespace="com.jackqiu.oj.mapper.PostMapper">
 
-    <resultMap id="BaseResultMap" type="com.yupi.oj.model.entity.Post">
+    <resultMap id="BaseResultMap" type="com.jackqiu.oj.model.entity.Post">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
@@ -25,7 +25,7 @@
         createTime,updateTime,isDelete
     </sql>
 
-    <select id="listPostWithDelete" resultType="com.yupi.oj.model.entity.Post">
+    <select id="listPostWithDelete" resultType="com.jackqiu.oj.model.entity.Post">
         select *
         from post
         where updateTime >= #{minUpdateTime}
