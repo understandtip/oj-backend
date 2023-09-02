@@ -45,7 +45,7 @@ spring:
       max-file-size: 10MB
 server:
   address: 0.0.0.0
-  port: 8121
+  port: 8122
   servlet:
     context-path: /api
     # cookie 30 天过期
@@ -91,5 +91,6 @@ cos:
     region: xxx
     bucket: xxx
 codesandbox:
-  type: sample
-  # remote sample thirdParty
+  type: remote
+  url: http://localhost:8090/executeCode
+  # remote   sample    thirdParty

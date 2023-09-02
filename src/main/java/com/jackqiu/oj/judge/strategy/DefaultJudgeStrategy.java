@@ -2,7 +2,7 @@ package com.jackqiu.oj.judge.strategy;
 
 import cn.hutool.json.JSONUtil;
 import com.jackqiu.oj.model.dto.question.JudgeConfig;
-import com.jackqiu.oj.model.dto.questionsubmit.JudgeInfo;
+import com.jackqiu.oj.judge.codesandbox.model.JudgeInfo;
 import com.jackqiu.oj.model.entity.Question;
 import com.jackqiu.oj.model.enums.JudgeInfoMessageEnum;
 
@@ -21,8 +21,8 @@ public class DefaultJudgeStrategy implements JudgeStrategy{
         List<String> realOutputList = judgeContext.getRealOutputList();
         Question question = judgeContext.getQuestion();
         JudgeInfo judgeInfo = judgeContext.getJudgeInfo();
-        Long time = judgeInfo.getTime();
-        Long memory = judgeInfo.getMemory();
+        Long time = judgeInfo.getTime();//todo 可能为空
+        Long memory = judgeInfo.getMemory();//todo 可能为空
         judgeInfoResponse.setMemory(memory);
         judgeInfoResponse.setTime(time);
         //5.1   先判断代码沙箱的实际输出结果的个数和题目的标准输入用例是否相同

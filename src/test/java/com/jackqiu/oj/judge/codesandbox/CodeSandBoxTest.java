@@ -23,7 +23,7 @@ class CodeSandBoxTest {
         CodeSandBox codeSandBox = new ThirdPartyCodeSandBox();
         String code = "int main(){  }";
         List<String> inputList = Arrays.asList("1 2","3 4");
-        String language = QuestionSubmitLanguageEnum.C.getValue();
+        String language = QuestionSubmitLanguageEnum.JAVA.getValue();
         ExecuteCodeRequest executeCodeRequest = ExecuteCodeRequest.builder()
                 .code(code)
                 .inputList(inputList)
@@ -39,7 +39,7 @@ class CodeSandBoxTest {
         CodeSandBox codeSandBox= CodeSandBoxFactory.newInstance(type);
         String code = "int main(){  }";
         List<String> inputList = Arrays.asList("1 2","3 4");
-        String language = QuestionSubmitLanguageEnum.C.getValue();
+        String language = QuestionSubmitLanguageEnum.JAVA.getValue();
         ExecuteCodeRequest executeCodeRequest = ExecuteCodeRequest.builder()
                 .code(code)
                 .inputList(inputList)
@@ -54,7 +54,7 @@ class CodeSandBoxTest {
         CodeSandBox codeSandBox= CodeSandBoxFactory.newInstance(type);
         String code = "int main(){  }";
         List<String> inputList = Arrays.asList("1 2","3 4");
-        String language = QuestionSubmitLanguageEnum.C.getValue();
+        String language = QuestionSubmitLanguageEnum.JAVA.getValue();
         ExecuteCodeRequest executeCodeRequest = ExecuteCodeRequest.builder()
                 .code(code)
                 .inputList(inputList)
@@ -68,9 +68,15 @@ class CodeSandBoxTest {
     void executeByProxy() {
         CodeSandBox codeSandBox= CodeSandBoxFactory.newInstance(type);
         codeSandBox = new CodeSandBoxProxy(codeSandBox);
-        String code = "int main(){  }";
+        String code = "public class Main {\n" +
+                "    public static void main(String[] args) {\n" +
+                "        int a = Integer.parseInt(args[0]);\n" +
+                "        int b = Integer.parseInt(args[1]);\n" +
+                "        System.out.println(\"结果:\" + (a + b));\n" +
+                "    }\n" +
+                "}";
         List<String> inputList = Arrays.asList("1 2","3 4");
-        String language = QuestionSubmitLanguageEnum.C.getValue();
+        String language = QuestionSubmitLanguageEnum.JAVA.getValue();
         ExecuteCodeRequest executeCodeRequest = ExecuteCodeRequest.builder()
                 .code(code)
                 .inputList(inputList)

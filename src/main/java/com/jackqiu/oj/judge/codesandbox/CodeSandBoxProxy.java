@@ -3,7 +3,6 @@ package com.jackqiu.oj.judge.codesandbox;
 import com.jackqiu.oj.judge.codesandbox.model.ExecuteCodeRequest;
 import com.jackqiu.oj.judge.codesandbox.model.ExecuteCodeResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 /**
  * 代码沙箱代理类，实现将一些增强功能添加到执行代码的方法前后

@@ -3,7 +3,7 @@ package com.jackqiu.oj.judge.codesandbox.impl;
 import com.jackqiu.oj.judge.codesandbox.CodeSandBox;
 import com.jackqiu.oj.judge.codesandbox.model.ExecuteCodeRequest;
 import com.jackqiu.oj.judge.codesandbox.model.ExecuteCodeResponse;
-import com.jackqiu.oj.model.dto.questionsubmit.JudgeInfo;
+import com.jackqiu.oj.judge.codesandbox.model.JudgeInfo;
 import com.jackqiu.oj.model.enums.JudgeInfoMessageEnum;
 import com.jackqiu.oj.model.enums.QuestionSubmitStatusEnum;
 

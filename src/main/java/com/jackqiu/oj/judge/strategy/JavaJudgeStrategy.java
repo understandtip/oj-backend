@@ -2,11 +2,12 @@ package com.jackqiu.oj.judge.strategy;
 
 import cn.hutool.json.JSONUtil;
 import com.jackqiu.oj.model.dto.question.JudgeConfig;
-import com.jackqiu.oj.model.dto.questionsubmit.JudgeInfo;
+import com.jackqiu.oj.judge.codesandbox.model.JudgeInfo;
 import com.jackqiu.oj.model.entity.Question;
 import com.jackqiu.oj.model.enums.JudgeInfoMessageEnum;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Java语言的判题策略
@@ -23,8 +24,8 @@ public class JavaJudgeStrategy implements JudgeStrategy{
         List<String> realOutputList = judgeContext.getRealOutputList();
         Question question = judgeContext.getQuestion();
         JudgeInfo judgeInfo = judgeContext.getJudgeInfo();
-        Long time = judgeInfo.getTime();
-        Long memory = judgeInfo.getMemory();
+        Long time = Optional.ofNullable(judgeInfo.getTime()).orElse(0L);//todo 可能为空
+        Long memory = Optional.ofNullable(judgeInfo.getMemory()).orElse(0L);//todo 可能为空
         judgeInfoResponse.setMemory(memory);
         judgeInfoResponse.setTime(time);
         //5.1   先判断代码沙箱的实际输出结果的个数和题目的标准输入用例是否相同
@@ -44,7 +45,7 @@ public class JavaJudgeStrategy implements JudgeStrategy{
         Long needTimeLimit = judgeConfig.getTimeLimit();
         Long needMemoryLimit = judgeConfig.getMemoryLimit();
         Long needStackLimit = judgeConfig.getStackLimit();//todo 可拓展的内容-->限制堆栈内存
-        if(time > needTimeLimit){
+        if(time - JAVA_PROGRAM_TIME_COST> needTimeLimit){
             judgeInfoResponse.setMessage(JudgeInfoMessageEnum.TIME_LIMIT_EXCEEDED.getValue());
             return judgeInfoResponse;
         }

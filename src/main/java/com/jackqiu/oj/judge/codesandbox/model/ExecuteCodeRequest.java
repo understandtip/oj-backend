@@ -1,7 +1,5 @@
 package com.jackqiu.oj.judge.codesandbox.model;
 
-import com.jackqiu.oj.model.dto.question.JudgeCase;
-import com.jackqiu.oj.model.dto.questionsubmit.JudgeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

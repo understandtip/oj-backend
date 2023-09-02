@@ -1,6 +1,6 @@
 package com.jackqiu.oj.judge.strategy;
 
-import com.jackqiu.oj.model.dto.questionsubmit.JudgeInfo;
+import com.jackqiu.oj.judge.codesandbox.model.JudgeInfo;
 import com.jackqiu.oj.model.entity.Question;
 import com.jackqiu.oj.model.entity.QuestionSubmit;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package com.jackqiu.oj.judge.strategy;
 
-import com.jackqiu.oj.model.dto.questionsubmit.JudgeInfo;
+import com.jackqiu.oj.judge.codesandbox.model.JudgeInfo;
 
 /**
  * 判题策略

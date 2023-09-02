@@ -4,9 +4,8 @@ import com.jackqiu.oj.judge.strategy.DefaultJudgeStrategy;
 import com.jackqiu.oj.judge.strategy.JavaJudgeStrategy;
 import com.jackqiu.oj.judge.strategy.JudgeContext;
 import com.jackqiu.oj.judge.strategy.JudgeStrategy;
-import com.jackqiu.oj.model.dto.questionsubmit.JudgeInfo;
+import com.jackqiu.oj.judge.codesandbox.model.JudgeInfo;
 import com.jackqiu.oj.model.entity.QuestionSubmit;
-import com.jackqiu.oj.model.enums.QuestionSubmitLanguageEnum;
 import org.springframework.stereotype.Service;
 
 /**
