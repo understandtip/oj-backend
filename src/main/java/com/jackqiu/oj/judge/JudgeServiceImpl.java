@@ -14,12 +14,16 @@ import com.jackqiu.oj.model.dto.question.JudgeCase;
 import com.jackqiu.oj.judge.codesandbox.model.JudgeInfo;
 import com.jackqiu.oj.model.entity.Question;
 import com.jackqiu.oj.model.entity.QuestionSubmit;
+import com.jackqiu.oj.model.enums.JudgeInfoMessageEnum;
 import com.jackqiu.oj.model.enums.QuestionSubmitStatusEnum;
 import com.jackqiu.oj.service.QuestionService;
 import com.jackqiu.oj.service.QuestionSubmitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -43,12 +47,18 @@ public class JudgeServiceImpl implements JudgeService{
 
     @Resource
     private JudgeManager judgeManager;
+
+    @Resource
+    private RedisTemplate<String,Object> redisTemplate;
+
+    private String redisKey = "oj:questionSubmit:listPage:10:1";
     /**
-     * 执行判题逻辑
+     * 执行判题逻辑 (由于修改了两张表question_submit和question，需要使用事务来保证数据的一致性)
      * @param questionSubmitId
      * @return
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public QuestionSubmit doJudge(Long questionSubmitId) {
         //1.获取QuestionSubmit（题目提交的状态，用户提交的代码、提交的语言）和Question（题目的输入输出用例、判题配置等）
         QuestionSubmit questionSubmit = questionSubmitService.getById(questionSubmitId);
@@ -97,11 +107,24 @@ public class JudgeServiceImpl implements JudgeService{
         JudgeInfo judgeInfoResponse = judgeManager.doJudge(judgeContext);
         //5.4   设置好对应的返回信息（可能还有其他异常信息）
         //6.更新数据库的信息
+        //6.1更新题目的题目提交数和题目通过数
+        if(judgeInfoResponse.getMessage().equals(JudgeInfoMessageEnum.ACCEPTED.getValue())) {
+            question.setAcceptSum(question.getAcceptSum() + 1);
+        }
+        question.setSubmitSum(question.getSubmitSum() + 1);
+        boolean updated = questionService.updateById(question);
+        if (!updated) {
+            throw new BusinessException(ErrorCode.OPERATION_ERROR,"更改题目信息失败");
+        }
+        //6.2更新题目提交表
         QuestionSubmit questionSubmitEnd = new QuestionSubmit();
         questionSubmitEnd.setId(questionSubmitId);
         questionSubmitEnd.setStatus(QuestionSubmitStatusEnum.SUCCESS.getValue());
         questionSubmitEnd.setJudgeInfo(JSONUtil.toJsonStr(judgeInfoResponse));
         boolean flag = questionSubmitService.updateById(questionSubmitEnd);
+        //更新了题目提交表，则将缓存中的数据删除
+//        ValueOperations<String, Object> ops = redisTemplate.opsForValue();
+//        ops.getAndDelete(redisKey);
         if(!flag){
             throw new BusinessException(ErrorCode.OPERATION_ERROR,"更改用户的题目提交信息失败");
         }

@@ -13,8 +13,7 @@ import java.util.List;
 /**
  * 题目视图
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ *  
  */
 @Data
 public class QuestionVO implements Serializable {
@@ -38,6 +37,11 @@ public class QuestionVO implements Serializable {
      * 标签列表（json 数组）
      */
     private List<String> tags;
+
+    /**
+     * 题目答案
+     */
+    private String answer;
 
     /**
      * 题目提交数

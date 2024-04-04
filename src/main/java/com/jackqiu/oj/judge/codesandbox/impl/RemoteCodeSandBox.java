@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
@@ -18,7 +19,7 @@ import javax.annotation.Resource;
  * 远端代码沙箱   （自己实现的代码沙箱逻辑）
  * @author jackqiu
  */
-@Component
+@Service
 public class RemoteCodeSandBox implements CodeSandBox {
 
     // 定义鉴权请求头和密钥
@@ -38,8 +39,9 @@ public class RemoteCodeSandBox implements CodeSandBox {
     public ExecuteCodeResponse execute(ExecuteCodeRequest executeCodeRequest) {
         System.out.println("远端代码沙箱");
         String json = JSONUtil.toJsonStr(executeCodeRequest);
-//        String url = "http://localhost:8090/executeCode";
-        String url = "http://47.120.11.50:8090/executeCode";
+        String url = "http://localhost:8090/executeCode";
+//        String url = "https://oj-code-sandbox-72541-5-1321173904.sh.run.tcloudbase.com//executeCode";
+//        String url = "http://120.26.124.229:8090/executeCode";
         String response = HttpUtil.createPost(url)
                 .header(AUTH_REQUEST_HEADER,AUTH_REQUEST_SECRET)
                 .body(json)

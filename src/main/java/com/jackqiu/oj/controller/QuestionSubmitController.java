@@ -13,6 +13,8 @@ import com.jackqiu.oj.model.vo.QuestionSubmitVO;
 import com.jackqiu.oj.service.QuestionSubmitService;
 import com.jackqiu.oj.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 题目提交接口
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ *  
  */
 @RestController
 @RequestMapping("/question_submit")
@@ -37,6 +39,9 @@ public class QuestionSubmitController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private RedisTemplate<String,Object> redisTemplate;
 
     /**
      * 题目提交
@@ -70,12 +75,30 @@ public class QuestionSubmitController {
                                       HttpServletRequest request) {
         long current = questionSubmitQueryRequest.getCurrent();
         long size = questionSubmitQueryRequest.getPageSize();
-        //查询出信息
+//        String redisKey = null;
+//        ValueOperations<String, Object> ops = null;
+//        if (current == 1) {
+//            redisKey = "oj:questionSubmit:listPage:" + size + ":" + current;
+//            //1.1先从缓存中取数据
+//            ops = redisTemplate.opsForValue();
+//            Page<QuestionSubmitVO> questionSubmitVoPageInRedis = (Page<QuestionSubmitVO>) ops.get(redisKey);
+//            //1.2如果存在直接返回
+//            if (questionSubmitVoPageInRedis != null) {
+//                return ResultUtils.success(questionSubmitVoPageInRedis);
+//            }
+//        }
+        //2.查询出信息
         Page<QuestionSubmit> questionSubmitPage = questionSubmitService.page(new Page<>(current, size),
                 questionSubmitService.getQueryWrapper(questionSubmitQueryRequest));
         //查询出当前登录了的用户信息
         final User loginUser = userService.getLoginUser(request);
         //返回脱敏信息
+//        Page<QuestionSubmitVO> questionSubmitVOPage = questionSubmitService.getQuestionSubmitVOPage(questionSubmitPage, loginUser);
+//        //3.将数据放在缓存中,注意设置缓存时间
+//        if (current == 1) {
+//            ops.set(redisKey,questionSubmitVOPage,1, TimeUnit.HOURS);
+//        }
+//        return ResultUtils.success(questionSubmitVOPage);
         return ResultUtils.success(questionSubmitService.getQuestionSubmitVOPage(questionSubmitPage, loginUser));
     }
 }

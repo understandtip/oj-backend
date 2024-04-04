@@ -18,6 +18,14 @@ class CodeSandBoxTest {
     @Value("${codesandbox.type:sample}")
     private String type;
 
+    @Value("${codesandbox.url}")
+    private String url;
+
+    @Test
+    void testing() {
+        System.out.println(url);
+    }
+
     @Test
     void execute() {
         CodeSandBox codeSandBox = new ThirdPartyCodeSandBox();

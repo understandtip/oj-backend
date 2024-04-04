@@ -2,12 +2,14 @@ package com.jackqiu.oj.judge.codesandbox.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author jackqiu
  */
 @Data
-public class JudgeInfo {
-
+public class JudgeInfo implements Serializable {
+    private static final long serialVersionUID = 900488662021911770L;
     /**
      * 程序执行信息
      */

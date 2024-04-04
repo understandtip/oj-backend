@@ -8,8 +8,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 用户查询请求
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ *  
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -43,6 +42,27 @@ public class UserQueryRequest extends PageRequest implements Serializable {
      * 用户角色：user/admin/ban
      */
     private String userRole;
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 电话
+     */
+    private String phone;
+
+    /**
+     * 状态
+     */
+    private Integer userStatus;
+
+    /**
+     * 性别
+     */
+    private Integer gender;
+
 
     private static final long serialVersionUID = 1L;
 }
